@@ -1,5 +1,5 @@
 const { Database } = require('../database/index')
-const User = require('../models/user.model')
+const { UserModel } = require('../models/index')
 
 class UserService {
 	async getAllUsers(req, res) {
@@ -7,20 +7,20 @@ class UserService {
 			const response = await Database.query('SELECT * FROM users')
 			return res.send(response.rows)
 		} catch (e) {
-			console.log('Error: ', e)
+			return res.status(500)
 		}
 	}
 
 	async createUser(req, res) {
 		try {
-			const user = new User(req.body.email, req.body.password)
+			const user = new UserModel(req.body)
 			const response = await Database.query(`
 				INSERT INTO users(email, password) 
 				VALUES ('${user.email}', '${user.password}')
 			`)
-			res.send(response.rows)
+			return res.send(response.rows)
 		} catch (e) {
-			console.log('Error: ', e)
+			return res.status(400).send({error: e.message})
 		}
 	}
 }
