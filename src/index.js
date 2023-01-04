@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 
-const { UsersController, AuthController} = require('./controllers')
+const { UsersController, AuthController } = require('./controllers')
 
 const PORT = process.env.PORT || 8080
 const app = express()

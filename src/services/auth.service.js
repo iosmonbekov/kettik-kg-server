@@ -1,13 +1,9 @@
-const { UserService } = require('./index')
-const { UserModel } = require('../models')
+const jwt = require('jsonwebtoken')
 
 class AuthService {
-	async signUp(req, res) {
-		try {
-
-		} catch (e) {
-			return res.status(400).send({ error: e.message })
-		}
+	generateAccessToken(id, role) {
+		const payload = {id, role}
+		return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '24h' })
 	}
 
 	async signIn(req, res) {

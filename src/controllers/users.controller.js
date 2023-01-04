@@ -1,10 +1,12 @@
 const Controller = require('express')
 const controller = Controller()
 
-const { UserService } = require('../services/index')
+const { AuthMiddleware } = require('../middlewares')
+const { UserService } = require('../services')
 
-controller.get('/', async (req, res) => {
+controller.get('/', AuthMiddleware, async (req, res) => {
 	try {
+		console.log(req.user)
 		const users = await UserService.getAllUsers()
 		return res.send(users)
 	} catch (e) {
