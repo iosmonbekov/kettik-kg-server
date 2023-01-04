@@ -1,15 +1,14 @@
 const { Database } = require('../database/index')
-const { UserModel } = require('../models/index')
 
 class UserService {
-	getAllUsers = async (req, res) => {
+	async getAllUsers() {
 		try {
 			const response = await Database.query(
 				'SELECT * FROM users JOIN roles on users.role = roles.role'
 			)
-			return res.send(response.rows)
+			return response.rows
 		} catch (e) {
-			return res.status(500)
+			throw Error(e.message)
 		}
 	}
 
@@ -20,22 +19,21 @@ class UserService {
 				JOIN roles ON users.role = roles.role
                 AND users.email = '${email}'
 			`)
-			return response.rows
+			return response.rows[0] ?? null
 		} catch (e) {
-			console.log('Error: ', e.message)
+			throw Error(e.message)
 		}
 	}
 
-	createUser = async (req, res) => {
+	async createUser(user) {
 		try {
-			const user = new UserModel(req.body)
 			const response = await Database.query(`
 				INSERT INTO users(email, password) 
 				VALUES ('${user.email}', '${user.password}')
 			`)
-			return res.send(response.rows)
+			return response.rows
 		} catch (e) {
-			return res.status(400).send({error: e.message})
+			throw Error(e.message)
 		}
 	}
 }

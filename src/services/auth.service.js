@@ -1,16 +1,18 @@
+const { UserService } = require('./index')
+const { UserModel } = require('../models')
 
 class AuthService {
 	async signUp(req, res) {
 		try {
-			res.send({a: 'signUp'})
-		} catch (e) {
 
+		} catch (e) {
+			return res.status(400).send({ error: e.message })
 		}
 	}
 
 	async signIn(req, res) {
 		try {
-			res.send({a: 'signIn'})
+
 		} catch (e) {
 
 		}
