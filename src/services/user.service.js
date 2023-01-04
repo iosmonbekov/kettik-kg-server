@@ -2,16 +2,31 @@ const { Database } = require('../database/index')
 const { UserModel } = require('../models/index')
 
 class UserService {
-	async getAllUsers(req, res) {
+	getAllUsers = async (req, res) => {
 		try {
-			const response = await Database.query('SELECT * FROM users')
+			const response = await Database.query(
+				'SELECT * FROM users JOIN roles on users.role = roles.role'
+			)
 			return res.send(response.rows)
 		} catch (e) {
 			return res.status(500)
 		}
 	}
 
-	async createUser(req, res) {
+	async getUserByEmail(email) {
+		try {
+			const response = await Database.query(`
+				SELECT * FROM users
+				JOIN roles ON users.role = roles.role
+                AND users.email = '${email}'
+			`)
+			return response.rows
+		} catch (e) {
+			console.log('Error: ', e.message)
+		}
+	}
+
+	createUser = async (req, res) => {
 		try {
 			const user = new UserModel(req.body)
 			const response = await Database.query(`

@@ -2,14 +2,16 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 
-const { UsersController } = require('./controllers/index')
+const { UsersController, AuthController} = require('./controllers')
 
 const PORT = process.env.PORT || 8080
 const app = express()
 
 app.use(express.json())
 app.use(cors())
+
 app.use('/users', UsersController)
+app.use('/auth', AuthController)
 
 const bootstrap = async () => {
 	try {
