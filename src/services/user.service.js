@@ -3,9 +3,7 @@ const { Database } = require('../database/index')
 class UserService {
 	async getAllUsers() {
 		try {
-			const response = await Database.query(
-				'SELECT * FROM users JOIN roles on users.role = roles.role'
-			)
+			const response = await Database.query('SELECT * FROM users JOIN roles on users.role = roles.role')
 			return response.rows
 		} catch (e) {
 			throw Error(e.message)
