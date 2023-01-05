@@ -13,7 +13,8 @@ controller.post('/sign-up', async (req, res) => {
 		if (candidate) throw Error('User already exist')
 		await UserService.createUser(user)
 
-		return res.status(201).send()
+		const token = AuthService.generateAccessToken(user.email, user.password)
+		return res.status(201).send({ token })
 	} catch (e) {
 		return res.status(400).send({error: e.message})
 	}
