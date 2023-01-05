@@ -6,7 +6,6 @@ const { UserService } = require('../services')
 
 controller.get('/', AuthMiddleware, async (req, res) => {
 	try {
-		console.log(req.user)
 		const users = await UserService.getAllUsers()
 		return res.send(users)
 	} catch (e) {

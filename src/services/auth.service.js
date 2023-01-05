@@ -6,11 +6,11 @@ class AuthService {
 		return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '24h' })
 	}
 
-	async signIn(req, res) {
+	verifyAccessToken(token, errorMessage) {
 		try {
-
+			return jwt.verify(token, process.env.JWT_SECRET)
 		} catch (e) {
-
+			throw Error(errorMessage ? errorMessage : e.message)
 		}
 	}
 }
