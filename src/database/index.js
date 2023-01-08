@@ -14,4 +14,5 @@ module.exports = new Sequelize(
 		},
 		host: process.env.DATABASE_HOST,
 		port: process.env.DATABASE_PORT,
+		logging: false,
 	})

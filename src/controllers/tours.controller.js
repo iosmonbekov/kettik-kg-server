@@ -6,8 +6,7 @@ const { TourService } = require('../services')
 controller.post('/', async (req, res) => {
 	try {
 		const tour = new TourDTO(req.body)
-		await TourService.createTour(tour)
-		return res.status(201).send()
+		return res.status(201).send(await TourService.createTour(tour))
 	} catch (e) {
 		return res.status(400).send({error: e.message})
 	}

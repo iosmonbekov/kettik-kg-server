@@ -1,10 +1,9 @@
-const { Database } = require('../database/index')
+const { Tour } = require('../models')
 
 class UserService {
 	async getAllTours() {
 		try {
-			const response = await Database.query('SELECT * FROM tours')
-			return response.rows
+			return await Tour.findAll()
 		} catch (e) {
 			throw Error(e.message)
 		}
@@ -12,11 +11,7 @@ class UserService {
 
 	async createTour(tour) {
 		try {
-			const response = await Database.query(`
-				INSERT INTO tours(name, user_id, start_date, end_date, max_users) 
-				VALUES ('${tour.name}', '${tour.user_id}', '${tour.start_date}', '${tour.end_date}', '${tour.max_users}')
-			`)
-			return response.rows
+			return await Tour.create(tour)
 		} catch (e) {
 			throw Error(e.message)
 		}

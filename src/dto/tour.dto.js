@@ -1,10 +1,9 @@
 module.exports = class {
-	constructor({name, start_date, end_date, max_users, user_id}) {
+	constructor({name, startDate, endDate, capacity }) {
 		this.setName(name)
-		this.setStartDate(start_date)
-		this.setEndDate(end_date)
-		this.setMaxUsers(max_users)
-		this.user_id = user_id
+		this.setStartDate(startDate)
+		this.setEndDate(endDate)
+		this.setMaxUsers(capacity)
 	}
 
 	setName(value) {
@@ -14,16 +13,16 @@ module.exports = class {
 
 	setStartDate(value) {
 		if (!value) throw Error('StartDate not exist')
-		this.start_date = value
+		this.startDate = value
 	}
 
 	setEndDate(value) {
 		if (!value) throw Error('EndDate not exist')
-		this.end_date = value
+		this.endDate = value
 	}
 
 	setMaxUsers(value) {
 		if (!value) throw Error('MaxUsers not exist')
-		this.max_users = value
+		this.capacity = value
 	}
 }

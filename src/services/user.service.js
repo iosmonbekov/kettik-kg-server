@@ -1,10 +1,9 @@
-const { Database } = require('../database/index')
+const { User } = require('../models')
 
 class UserService {
 	async getAllUsers() {
 		try {
-			const response = await Database.query('SELECT * FROM users JOIN roles on users.role = roles.role')
-			return response.rows
+			return await User.findAll()
 		} catch (e) {
 			throw Error(e.message)
 		}
@@ -12,12 +11,12 @@ class UserService {
 
 	async getUserByEmail(email) {
 		try {
-			const response = await Database.query(`
-				SELECT * FROM users
-				JOIN roles ON users.role = roles.role
-                AND users.email = '${email}'
-			`)
-			return response.rows[0] ?? null
+			const response = await User.findOne({
+				where: {
+					email
+				}
+			})
+			return response ?? null
 		} catch (e) {
 			throw Error(e.message)
 		}
@@ -25,11 +24,7 @@ class UserService {
 
 	async createUser(user) {
 		try {
-			const response = await Database.query(`
-				INSERT INTO users(email, password) 
-				VALUES ('${user.email}', '${user.password}')
-			`)
-			return response.rows
+			return await User.create(user)
 		} catch (e) {
 			throw Error(e.message)
 		}
