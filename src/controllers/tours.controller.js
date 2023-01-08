@@ -1,11 +1,11 @@
 const Controller = require('express')
 const controller = Controller()
-const { TourModel } = require('../dto')
+const { TourDTO } = require('../dto')
 const { TourService } = require('../services')
 
 controller.post('/', async (req, res) => {
 	try {
-		const tour = new TourModel(req.body)
+		const tour = new TourDTO(req.body)
 		await TourService.createTour(tour)
 		return res.status(201).send()
 	} catch (e) {

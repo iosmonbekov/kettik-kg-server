@@ -2,11 +2,11 @@ const Controller = require('express')
 const controller = Controller()
 
 const { AuthService, UserService } = require('../services/index')
-const { UserModel } = require('../dto')
+const { UserDTO } = require('../dto')
 
 controller.post('/sign-up', async (req, res) => {
 	try {
-		const user = new UserModel(req.body)
+		const user = new UserDTO(req.body)
 		const candidate = await UserService.getUserByEmail(user.email)
 
 		if (candidate) throw Error('User already exist')
@@ -21,7 +21,7 @@ controller.post('/sign-up', async (req, res) => {
 
 controller.post('/sign-in', async (req, res) => {
 	try {
-		const user = new UserModel(req.body)
+		const user = new UserDTO(req.body)
 		const candidate = await UserService.getUserByEmail(user.email)
 
 		if (!candidate) throw Error('User with this email doesn\'t exist')
