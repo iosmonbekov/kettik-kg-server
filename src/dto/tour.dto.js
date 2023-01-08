@@ -1,4 +1,4 @@
-module.exports = class Tour {
+module.exports = class {
 	constructor({name, start_date, end_date, max_users, user_id}) {
 		this.setName(name)
 		this.setStartDate(start_date)

@@ -2,7 +2,7 @@ const Controller = require('express')
 const controller = Controller()
 
 const { AuthService, UserService } = require('../services/index')
-const { UserModel } = require('../models')
+const { UserModel } = require('../dto')
 
 controller.post('/sign-up', async (req, res) => {
 	try {

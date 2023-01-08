@@ -1,6 +1,6 @@
 const Controller = require('express')
 const controller = Controller()
-const { TourModel } = require('../models')
+const { TourModel } = require('../dto')
 const { TourService } = require('../services')
 
 controller.post('/', async (req, res) => {
