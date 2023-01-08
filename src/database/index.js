@@ -1,24 +1,17 @@
-const { Pool } = require('pg')
+const { Sequelize } = require('sequelize')
 
-const Database = new Pool({
-	host: process.env.DATABASE_HOST,
-	port: process.env.DATABASE_PORT,
-	database: process.env.DATABASE,
-	user: process.env.DATABASE_USER,
-	password: process.env.DATABASE_PASSWORD,
-	ssl: {
-		rejectUnauthorized: false
-	}
-})
-
-Database.connect((err) => {
-	if (err) {
-		console.error('Database connection error', err.stack)
-	} else {
-		console.log('Database connected')
-	}
-})
-
-module.exports =  {
-	Database,
-}
+module.exports = new Sequelize(
+	process.env.DATABASE,
+	process.env.DATABASE_USER,
+	process.env.DATABASE_PASSWORD,
+	{
+		dialect: 'postgres',
+		dialectOptions: {
+			ssl: {
+				require: true,
+				rejectUnauthorized: false
+			}
+		},
+		host: process.env.DATABASE_HOST,
+		port: process.env.DATABASE_PORT,
+	})

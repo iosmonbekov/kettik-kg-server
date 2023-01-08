@@ -1,8 +1,9 @@
 require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
+const Database = require('./database')
 
-const { UsersController, AuthController, ToursController} = require('./controllers')
+const { UsersController, AuthController, ToursController } = require('./controllers')
 
 const PORT = process.env.PORT || 8080
 const app = express()
@@ -16,6 +17,8 @@ app.use('/tours', ToursController)
 
 const bootstrap = async () => {
 	try {
+		await Database.authenticate()
+		await Database.sync()
 		app.listen(PORT, () => console.log(`Server started at port=${PORT}`))
 	} catch(e) {
 		console.log('Error: ', e)
