@@ -3,7 +3,30 @@ const { Tour, User, UserTour} = require('../models')
 class UserService {
 	async getAllTours() {
 		try {
-			return await Tour.findAll({ include: User })
+			return await Tour.findAll({ include: {
+				model: User,
+				attributes: ['id', 'email'],
+				through: {
+					attributes: []
+				},
+			}})
+		} catch (e) {
+			throw Error(e.message)
+		}
+	}
+
+	async getUserTours(userId) {
+		try {
+			return await Tour.findAll({ include: {
+				model: User,
+				attributes: [],	
+				where: {
+					id: userId
+				},
+				through: {
+					attributes: []
+				},
+			}})
 		} catch (e) {
 			throw Error(e.message)
 		}

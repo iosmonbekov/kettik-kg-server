@@ -3,7 +3,12 @@ const { User, Tour} = require('../models')
 class UserService {
 	async getAllUsers() {
 		try {
-			return await User.findAll({ include: Tour })
+			return await User.findAll({ include: [{
+				model: Tour, 
+				through: {
+					attributes: []
+				}
+			}]})
 		} catch (e) {
 			throw Error(e.message)
 		}

@@ -10,9 +10,8 @@ controller.post('/sign-up', async (req, res) => {
 		const candidate = await UserService.getUserByEmail(user.email)
 
 		if (candidate) throw Error('User already exist')
-		await UserService.createUser(user)
-
-		const token = AuthService.generateAccessToken(user.email, user.password)
+		const newUser = await UserService.createUser(user)
+		const token = AuthService.generateAccessToken(newUser)
 		return res.status(201).send({ token })
 	} catch (e) {
 		return res.status(400).send({error: e.message})
@@ -27,7 +26,7 @@ controller.post('/sign-in', async (req, res) => {
 		if (!candidate) throw Error('User with this email doesn\'t exist')
 		if (user.password !== candidate.password) throw Error('Password not correct')
 
-		const token = AuthService.generateAccessToken(user.email, user.password)
+		const token = AuthService.generateAccessToken(candidate)
 		return res.send({ token })
 	} catch (e) {
 		return res.status(400).send({error: e.message})
