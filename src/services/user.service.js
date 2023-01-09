@@ -1,9 +1,9 @@
-const { User } = require('../models')
+const { User, Tour} = require('../models')
 
 class UserService {
 	async getAllUsers() {
 		try {
-			return await User.findAll()
+			return await User.findAll({ include: Tour })
 		} catch (e) {
 			throw Error(e.message)
 		}

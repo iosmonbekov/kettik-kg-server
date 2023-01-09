@@ -12,6 +12,17 @@ controller.post('/', async (req, res) => {
 	}
 })
 
+controller.post('/:id', async (req, res) => {
+	try {
+		const tourId = Number(req.params.id)
+		const userId = Number(req.body.userId)
+		const response = await TourService.connectUserAndTour(userId, tourId)
+		return res.send(response)
+	} catch (e) {
+		return res.status(400).send({error: e.message})
+	}
+})
+
 controller.get('/', async (req, res) => {
 	try {
 		const tours = await TourService.getAllTours()
