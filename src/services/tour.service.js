@@ -32,6 +32,16 @@ class UserService {
 		}
 	}
 
+	async getTourById(tourId) {
+		try {
+			return await Tour.findOne({ where: {
+				id: tourId
+			}})
+		} catch (e) {
+			throw Error(e.message)
+		}
+	}
+
 	async createTour(tour) {
 		try {
 			return await Tour.create(tour)

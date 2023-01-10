@@ -44,4 +44,14 @@ controller.get('/', AuthMiddleware, async (req, res) => {
 	}
 })
 
+controller.get('/:id', AuthMiddleware, async (req, res) => {
+	try {
+		const id = Number(req.params.id)
+		const tour = await TourService.getTourById(id)
+		return res.send(tour)
+	} catch (e) {
+		return res.status(400).send({error: e.message})
+	}
+})
+
 module.exports = controller
