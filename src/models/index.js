@@ -13,7 +13,9 @@ const Tour = Database.define( 'tour', {
 	name: { type: DataTypes.STRING },
 	startDate: { type: DataTypes.STRING },
 	endDate: { type: DataTypes.STRING },
-	capacity: { type: DataTypes.STRING }
+	capacity: { type: DataTypes.INTEGER },
+	image: { type: DataTypes.STRING },
+	price: { type: DataTypes.INTEGER },
 })
 
 const UserTour = Database.define('user-tour', {
