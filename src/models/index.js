@@ -19,11 +19,13 @@ const Tour = Database.define( 'tour', {
 })
 
 const UserTour = Database.define('user-tour', {
-	id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true }
+	id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+	status: { type: DataTypes.STRING }
 })
 
 User.belongsToMany(Tour, { through: UserTour })
 Tour.belongsToMany(User, { through: UserTour })
+
 
 module.exports = {
 	User,

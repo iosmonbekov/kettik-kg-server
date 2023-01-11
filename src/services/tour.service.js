@@ -1,6 +1,6 @@
 const { Tour, User, UserTour} = require('../models')
 
-class UserService {
+class TourService {
 	async getAllTours() {
 		try {
 			return await Tour.findAll({ include: {
@@ -59,4 +59,4 @@ class UserService {
 	}
 }
 
-module.exports = new UserService()
+module.exports = new TourService()
