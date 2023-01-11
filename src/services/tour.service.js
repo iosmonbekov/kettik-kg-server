@@ -5,7 +5,7 @@ class TourService {
 		try {
 			return await Tour.findAll({ include: {
 				model: User,
-				attributes: ['id', 'email'],
+				attributes: [],
 				through: {
 					attributes: []
 				},
@@ -19,7 +19,7 @@ class TourService {
 		try {
 			return await Tour.findAll({ include: {
 				model: User,
-				attributes: [],	
+				attributes: [],
 				where: {
 					id: userId
 				},
@@ -32,11 +32,20 @@ class TourService {
 		}
 	}
 
-	async getTourById(tourId) {
+	async getTourById(tourId, userId) {
 		try {
-			return await Tour.findOne({ where: {
+			const tour = await Tour.findOne({ where: {
 				id: tourId
+			}, include: {
+				model: User,
+				attributes: ['id'],
+				through: {
+					attributes: []
+				}
 			}})
+
+			tour.dataValues.registered = Boolean(tour.dataValues.users.find(({ dataValues }) => dataValues.id === userId))
+			return tour
 		} catch (e) {
 			throw Error(e.message)
 		}

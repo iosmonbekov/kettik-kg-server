@@ -19,7 +19,6 @@ app.use(cors())
 app.use('/users', UsersController)
 app.use('/auth', AuthController)
 app.use('/tours', ToursController)
-app.use('/requests', RequestController)
 
 const bootstrap = async () => {
 	try {

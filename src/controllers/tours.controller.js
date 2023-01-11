@@ -17,7 +17,7 @@ controller.post('/', AuthMiddleware, async (req, res) => {
 controller.post('/:id', AuthMiddleware, async (req, res) => {
 	try {
 		const tourId = Number(req.params.id)
-		const userId = Number(req.body.userId)
+		const userId = Number(req.user.id)
 		const response = await TourService.connectUserAndTour(userId, tourId)
 		return res.send(response)
 	} catch (e) {
@@ -25,7 +25,7 @@ controller.post('/:id', AuthMiddleware, async (req, res) => {
 	}
 })
 
-controller.get('/my', AuthMiddleware, async (req, res) => {
+controller.get('/my-tours', AuthMiddleware, async (req, res) => {
 	try {
 		const userId = Number(req.user.id)
 		const tours = await TourService.getUserTours(userId)
@@ -46,8 +46,9 @@ controller.get('/', AuthMiddleware, async (req, res) => {
 
 controller.get('/:id', AuthMiddleware, async (req, res) => {
 	try {
-		const id = Number(req.params.id)
-		const tour = await TourService.getTourById(id)
+		const tourId = Number(req.params.id)
+		const userId = Number(req.user.id)
+		const tour = await TourService.getTourById(tourId, userId)
 		return res.send(tour)
 	} catch (e) {
 		return res.status(400).send({error: e.message})
